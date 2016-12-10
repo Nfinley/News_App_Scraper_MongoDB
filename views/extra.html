@@ -1,0 +1,83 @@
+<!--Carousel stuff-->
+
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators - not really necessary -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+
+        {{#each news}}
+        <div class="item active">
+            <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>{{title}}</h1>
+                    <p> {{brief}}</p>
+                    <p><a class="btn btn-lg btn-primary" href="{{link}}" role="button">Read More...</a></p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+
+
+    </div>
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+
+{{!-- Done column --}}
+<div class="col m6 columnRight">
+
+
+    {{!-- The completed section once a user clicks on the button done --}}
+    <h4> Done </h4>
+
+    <ul>
+        {{#each news}}
+        {{#if this.Todo.completed}}
+        <div class="card-panel blue z-depth-4">
+	<span class="white-text">
+      <li>
+        <span class = "writing">{{this.Todo.task_name}}</span>
+		<p class="assignTo">Completed by: {{this.username}}
+        <form action="/move-back/{{this.Todo.id}}/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="task" value="false">
+          <button type="submit" class="waves-effect waves-light btn grey complete_float left"><i class="fa fa-arrow-left"></i></button>
+        </form>
+
+        <form action="/delete/{{this.Todo.id}}/{{this.id}}?_method=DELETE" method="POST">
+	          <input type="hidden" name="task" value="true">
+	          <button type="submit" class="waves-effect waves-light btn red trash_float right"><i class="fa fa-trash"></i></button>
+	        </form>
+      </li>
+	</span>
+        </div>
+        {{/if}}
+        {{/each}}
+    </ul>
+</div>
+
+
+
+<form action="/news/{{this.Note.id}}?_method=PUT" method="POST">
+    <div><input class type="textarea" name="user" placeholder="Add comment" id="assigned"></div>
+    <input type="hidden" name="task" value="true">
+    <button type="submit" class="btn btn-primary">Add Comment</button>
+
+</form>
+<form action="/delete/{{this.Todo.id}}/{{this.id}}?_method=DELETE" method="POST">
+    <input type="hidden" name="task" value="true">
+    <button type="submit" class="btn btn-primary"><i class="fa fa-trash"></i></button>
+</form>

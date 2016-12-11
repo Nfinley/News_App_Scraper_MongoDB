@@ -43,10 +43,6 @@ module.exports = {
                 // Save object with the scraped page data
                 let result = {};
 
-                // result.title = $(this).children("h2").children("a").text();
-                // result.link = $(this).children("h2").children("a").attr("href");
-                // result.brief = $(this).find('.cb-excerpt').text();
-                // result.image =$(this).find('.cb-mask').children("img").attr("src");
 
                 // Add the text and href of every link, and save them as properties of the result object
                 result.title = $(this).children("a").text();
@@ -164,13 +160,11 @@ module.exports = {
     },
 
 
-
-
 //create function to create new note and update existing note
     updateNote: (req, res) => {
         // Create a note and pass the req.body to the entry
         let newNote = new Note(req.body);
-
+        console.log("HI");
         // And save the new note the db
         newNote.save(function (error, doc) {
             // Log any errors
@@ -199,24 +193,3 @@ module.exports = {
 
 };
 
-//====NOT NEEDED ======
-
-//create function for 'populateNote' which look for article by ID and populates the notes (.populate("note")
-//     populateNote: (req, res) => {
-//         // Using the id passed in the id parameter, executes a query that finds news article by id
-//         News.findOne({"_id": req.params.id})
-//         // then populate all of the notes associated with it
-//             .populate("note")
-//             // now, execute our query
-//             .exec(function (error, doc) {
-//                 // Log any errors
-//                 if (error) {
-//                     console.log(error);
-//                 }
-//                 // Otherwise, send the doc to the browser as a json object
-//                 else {
-//                     res.json(doc);
-//                 }
-//             });
-//
-//     },

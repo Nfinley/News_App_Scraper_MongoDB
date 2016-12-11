@@ -25,7 +25,7 @@ router.get('/previous/:index/:id', newsController.previousArticle);
 
 
 //create post to create a new note or update existing note
-router.post('/:id', newsController.updateNote);
+router.put('/update/:id', newsController.updateNote);
 
 //create get route to pull articles by Object ID with the notes (add News.find() + .populate("note") in controller )
 // router.get('/:id', newsController.populateNote);

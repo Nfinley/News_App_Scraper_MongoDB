@@ -48,12 +48,6 @@ app.use(session({
     cookie: { secure: false }
 }));
 
-//===== view engine setup ======
-
-//old set up
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'hbs');
 
 
 // ======view engine setup=======
@@ -105,6 +99,8 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
+
 
 // Listen on port 3000
 app.listen(process.env.PORT || 3000, () => {

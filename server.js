@@ -10,6 +10,8 @@ const express = require('express'),
     cheerio = require("cheerio"),
     Promise = require("bluebird"),
     mongoose = require("mongoose"),
+    News = require ('./models/News.js'),
+    Note = require('./models/Note.js'),
     indexRouter = require('./routes/indexRouter'),
     newsRouter = require('./routes/newsRouter'),
     session = require('express-session'),
@@ -24,8 +26,8 @@ const express = require('express'),
 mongoose.Promise = Promise;
 
 // Creating the mongoose connection
-mongoose.connect("mongodb://localhost/scraperlocal");
-// mongoose.connect("mongodb://heroku_fb0c0r33:ev7f7ms18p5bt4nvrilok3b9ap@ds111788.mlab.com:11788/heroku_fb0c0r33");
+// mongoose.connect("mongodb://localhost/scraperlocal");
+mongoose.connect("mongodb://heroku_fb0c0r33:ev7f7ms18p5bt4nvrilok3b9ap@ds111788.mlab.com:11788/heroku_fb0c0r33");
 const db = mongoose.connection;
 
 // Show any mongoose errors

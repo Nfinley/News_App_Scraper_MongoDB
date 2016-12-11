@@ -9,28 +9,28 @@ const News = require('../models/News'),
 //function to grab comments as attached to each article
 
 function getComments(id){
-    //
-    // News.findOne({"_id": id})
-    // // then populate all of the notes associated with it
-    //     .populate("note")
-    //     // now, execute our query
-    //     .exec(function (error, doc) {
-    //         // Log any errors
-    //         if (error) {
-    //             console.log(error);
-    //         }
-    //         // Otherwise, send the doc to the browser as a json object
-    //         else {
-    //             // res.json(doc);
-    //             return doc;
-    //         }
-    //     });
-    return [id];
+
+    News.findOne({"_id": id})
+    // then populate all of the notes associated with it
+        .populate("note")
+        // now, execute our query
+        .exec(function (error, doc) {
+            // Log any errors
+            if (error) {
+                console.log(error);
+            }
+            // Otherwise, send the doc to the browser as a json object
+            else {
+                // res.json(doc);
+                return doc;
+            }
+        });
+    // return [id];
 
 }
 
 module.exports = {
-    insertNews: (req, res) => {
+    scrapeNews: (req, res) => {
         console.log("getting your news!");
 
 
@@ -109,7 +109,7 @@ module.exports = {
             });
     },
 
-    //put the first article on the page
+    //put the first article on the page by default
     renderNews: (req, res) => {
         // (req.params.index);
         let hbsObject = {news: req.session.newsArray[0], index: 0, comments: getComments(req.session.newsArray[0]._id)};
@@ -119,14 +119,14 @@ module.exports = {
     },
 
 
-    //this is the route for the next arrow to display the second article
+    //this is the route for the next arrow to display the second article (the right arrow)
     nextArticle: (req, res) => {
         let articleIndex = parseInt(req.params.index);
         //set to zero as a quick error handling incase user types in something in the url
         let newIndex=0;
 
 
-        //last one
+        // hanlding for the last article in the array and cycles back to the first article
         if(articleIndex === req.session.newsArray.length -1) {
             newIndex = 0;
 
@@ -134,20 +134,21 @@ module.exports = {
             newIndex = articleIndex +1;
 
         }
+        //renders the articles and comments to the page
         let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, comments: getComments(req.params.id)};
         res.render('index', hbsObject);
 
 
     },
 
-    //this will handle the click for the previous
+    //this will handle the click for the previous (the left arrow)
     previousArticle: (req, res) => {
         let articleIndex = parseInt(req.params.index);
-        //set to zero as a quick error handling incase user types in something in the url
+        //set to zero as a quick error handling in case user types in something unexpected in the url
         let newIndex=0;
 
 
-        //last one
+        //handling for the first article is the user clicks the right arrow it displays the last article in the array
         if(articleIndex === 0) {
             newIndex = req.session.newsArray.length  -1;
 
@@ -155,31 +156,13 @@ module.exports = {
             newIndex = articleIndex -1
 
         }
+        //renders the articles and comments to the page
         let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, comments: getComments(req.params.id)};
         res.render('index', hbsObject);
 
 
     },
 
-//create function for 'populateNote' which look for article by ID and populates the notes (.populate("note")
-    populateNote: (req, res) => {
-        // Using the id passed in the id parameter, executes a query that finds news article by id
-        News.findOne({"_id": req.params.id})
-        // then populate all of the notes associated with it
-            .populate("note")
-            // now, execute our query
-            .exec(function (error, doc) {
-                // Log any errors
-                if (error) {
-                    console.log(error);
-                }
-                // Otherwise, send the doc to the browser as a json object
-                else {
-                    res.json(doc);
-                }
-            });
-
-    },
 
 
 
@@ -207,6 +190,7 @@ module.exports = {
                         else {
                             // Or send the document to the browser
                             res.send(doc);
+                        //    add a redirect to display the comment on the current article
                         }
                     });
             }
@@ -214,3 +198,25 @@ module.exports = {
     }
 
 };
+
+//====NOT NEEDED ======
+
+//create function for 'populateNote' which look for article by ID and populates the notes (.populate("note")
+//     populateNote: (req, res) => {
+//         // Using the id passed in the id parameter, executes a query that finds news article by id
+//         News.findOne({"_id": req.params.id})
+//         // then populate all of the notes associated with it
+//             .populate("note")
+//             // now, execute our query
+//             .exec(function (error, doc) {
+//                 // Log any errors
+//                 if (error) {
+//                     console.log(error);
+//                 }
+//                 // Otherwise, send the doc to the browser as a json object
+//                 else {
+//                     res.json(doc);
+//                 }
+//             });
+//
+//     },

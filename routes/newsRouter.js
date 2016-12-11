@@ -6,7 +6,7 @@ const express = require('express'),
 
 
 /* GET news listing via the scraper, scraper function housed in controller */
-router.get('/', newsController.insertNews);
+router.get('/', newsController.scrapeNews);
 
 
 //create get route to GET THE ARTICLES
@@ -28,6 +28,6 @@ router.get('/previous/:index/:id', newsController.previousArticle);
 router.post('/:id', newsController.updateNote);
 
 //create get route to pull articles by Object ID with the notes (add News.find() + .populate("note") in controller )
-router.get('/:id', newsController.populateNote);
+// router.get('/:id', newsController.populateNote);
 
 module.exports = router;

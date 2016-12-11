@@ -11,7 +11,7 @@ const mongoose = require("mongoose"),
 const NoteSchema = new Schema({
     // Just a string
     comments: [{
-        title: {type: String, required: "Please title your comment"},
+        // title: {type: String, required: "Please title your comment"},
     // Just a string
         body: {type: String, required: "Please write your comment"}
     }]

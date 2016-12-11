@@ -12,12 +12,22 @@ router.get('/', newsController.insertNews);
 //create get route to GET THE ARTICLES
 router.get('/getNews', newsController.getNews);
 
-//create get route to pull articles by Object ID with the notes (add News.find() + .populate("note") in controller )
-router.get('/:id', newsController.populateNote);
+//create get route to GET THE ARTICLES
+router.get('/renderNews', newsController.renderNews);
+
+
+//This will handle the right arrow click on the page
+router.get('/next/:index/:id', newsController.nextArticle);
+
+//This will handle the right arrow click on the page
+router.get('/previous/:index/:id', newsController.previousArticle);
 
 
 
 //create post to create a new note or update existing note
 router.post('/:id', newsController.updateNote);
+
+//create get route to pull articles by Object ID with the notes (add News.find() + .populate("note") in controller )
+router.get('/:id', newsController.populateNote);
 
 module.exports = router;

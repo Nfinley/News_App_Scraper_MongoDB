@@ -17,7 +17,9 @@ const NewsSchema = new Schema({
     // link is a required string
     link: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        dropDups: true
     },
     brief: {
         type: String,

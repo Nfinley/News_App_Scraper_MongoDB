@@ -3,7 +3,15 @@
 
 
 
+.arrowBox {
+    display: inline-block;
+    width: 295px;
+    height: auto;
+    color: #F3F3F3;
+    font-size: 40px;
+    font-weight: bolder;
 
+}
 
 
 * Links */

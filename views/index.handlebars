@@ -1,26 +1,43 @@
-{{#each news}}
 
-
-
-    <div class="panel panel-default" id="story_{{@index}}">
+    <div class="panel panel-default" id="story">
         <div class="panel-heading">
-            <h3 class="panel-title">{{title}}</h3>
+            <h3 class="panel-title" id="{{_id}}">{{news.title}}</h3>
         </div>
         <div class="panel-body">
-            {{brief}}
+            {{news.brief}}
 
-            <p><a href="{{link}}" class="btn btn-sm btn-primary">Read More</a></p>
+            <p><a href="{{news.link}}" class="btn btn-sm btn-primary">Read More</a></p>
+
+            <!---->
+            <div class="addComment">
+            <h4>Add Your Comment</h4>
+            <textarea class type="text" name="user" placeholder="comment" id="commentBody_"></textarea>
+            <input type="hidden" name="" value="true" />
+            <button type="submit" class="btn btn-sm btn-warning" id="sendComment" data-currentArticle="0">Add </button>
+            </div>
         </div>
-        <div class="panel-footer">Comments:
-            <input class type="textarea" name="user" placeholder="comment" id="assigned">
-            <input type="hidden" name="task" value="true" />
-            <button type="submit" class="btn btn-sm btn-warning">Add </button></div>
+        <!--Added comments to the page-->
+        <div class="panel-footer postedComments" id = "commentBox">Comments:
+            <div> <p> {{comments}}
+            </p></div>
+            <button type="submit" class="btn btn-primary" href="/delete/:id"><i class="fa fa-trash"></i></button>
+        </div>
+
 
 
 
     </div>
 
-{{/each}}
+
+
+<div class="arrowContainer">
+    <div class="arrowBox" id="arrowLeft" >
+        <p> <a href="/news/previous/{{index}}/{{news._id}}">&#171; </a></p>
+    </div>
+    <div class="arrowBox" id="arrowRight">
+        <p> <a href="/news/next/{{index}}/{{news._id}}">&#187; </a></p>
+    </div>
+</div>
 
 
 

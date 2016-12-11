@@ -5,6 +5,30 @@ const News = require('../models/News'),
     request = require("request");
 
 
+
+//function to grab comments as attached to each article
+
+function getComments(id){
+    //
+    // News.findOne({"_id": id})
+    // // then populate all of the notes associated with it
+    //     .populate("note")
+    //     // now, execute our query
+    //     .exec(function (error, doc) {
+    //         // Log any errors
+    //         if (error) {
+    //             console.log(error);
+    //         }
+    //         // Otherwise, send the doc to the browser as a json object
+    //         else {
+    //             // res.json(doc);
+    //             return doc;
+    //         }
+    //     });
+    return [id];
+
+}
+
 module.exports = {
     insertNews: (req, res) => {
         console.log("getting your news!");
@@ -62,24 +86,80 @@ module.exports = {
 
 
 
-//    get News Function which will look in the database for all the content
+//    get News Function which will look in the database for all the content (update show articles based on session variables instead of database
     getNews: (req, res) => {
-            News.find({}).limit(5).exec(function (error, doc) {
-                console.log("The data: ", doc);
+            News.find({}).exec(function (error, doc) {
+                // console.log("The data: ", doc);
                 // Log any errors
                 if (error) {
                     console.log(error);
                 }
                 // Or send the doc to the browser as a json object
                 else {
-                    let hbsObject = {news: doc};
-                    res.render('index', hbsObject);
-                    // res.json(doc);
-                    console.log(doc);
+
+                    //saves the content as a session variable and as an array
+                    req.session.newsArray = doc;
+                    // let hbsObject = {news: req.session.newsArray, index: 0};
+                    // console.log("This is the session array: ", req.session.newsArray)
+                    // res.render('index', hbsObject);
+
+                    //need to send a response
+                    res.json(req.session.newsArray);
                 }
             });
     },
 
+    //put the first article on the page
+    renderNews: (req, res) => {
+        // (req.params.index);
+        let hbsObject = {news: req.session.newsArray[0], index: 0, comments: getComments(req.session.newsArray[0]._id)};
+
+        res.render('index', hbsObject);
+
+    },
+
+
+    //this is the route for the next arrow to display the second article
+    nextArticle: (req, res) => {
+        let articleIndex = parseInt(req.params.index);
+        //set to zero as a quick error handling incase user types in something in the url
+        let newIndex=0;
+
+
+        //last one
+        if(articleIndex === req.session.newsArray.length -1) {
+            newIndex = 0;
+
+        } else {
+            newIndex = articleIndex +1;
+
+        }
+        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, comments: getComments(req.params.id)};
+        res.render('index', hbsObject);
+
+
+    },
+
+    //this will handle the click for the previous
+    previousArticle: (req, res) => {
+        let articleIndex = parseInt(req.params.index);
+        //set to zero as a quick error handling incase user types in something in the url
+        let newIndex=0;
+
+
+        //last one
+        if(articleIndex === 0) {
+            newIndex = req.session.newsArray.length  -1;
+
+        } else {
+            newIndex = articleIndex -1
+
+        }
+        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, comments: getComments(req.params.id)};
+        res.render('index', hbsObject);
+
+
+    },
 
 //create function for 'populateNote' which look for article by ID and populates the notes (.populate("note")
     populateNote: (req, res) => {
@@ -100,6 +180,8 @@ module.exports = {
             });
 
     },
+
+
 
 //create function to create new note and update existing note
     updateNote: (req, res) => {

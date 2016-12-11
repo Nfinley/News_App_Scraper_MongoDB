@@ -12,6 +12,7 @@ const express = require('express'),
     mongoose = require("mongoose"),
     indexRouter = require('./routes/indexRouter'),
     newsRouter = require('./routes/newsRouter'),
+    session = require('express-session'),
     app = express();
 
 
@@ -36,6 +37,14 @@ db.on("error", function(error) {
 db.once("open", function() {
     console.log("Mongoose connection successful.");
 });
+
+//session variable set up to house the articles as a session variable
+app.use(session({
+    secret: '1234567',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
 
 //===== view engine setup ======
 

@@ -26,7 +26,7 @@ function getComments(id){
                 // res.json(doc);
                 console.log("In the comments function: " , doc);
                 //doc.note.body returns just the comment
-                return doc.note.body;
+                return doc;
             }
         });
     // return [id];
@@ -124,18 +124,23 @@ module.exports = {
         let articleIndex = parseInt(req.params.index);
         //set to zero as a quick error handling incase user types in something in the url
         let newIndex=0;
-
+        let idValue;
 
         // hanlding for the last article in the array and cycles back to the first article
         if(articleIndex === req.session.newsArray.length -1) {
             newIndex = 0;
+            idValue = req.session.newsArray[newIndex]._id;
 
         } else {
             newIndex = articleIndex +1;
+            idValue = req.session.newsArray[newIndex]._id;
+            // console.log("Should be next ID: " + idValue);
 
         }
+        //get the new session id number from the index value
+
         //renders the articles and comments to the page
-        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, body: getComments(req.params.id)};
+        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, body: getComments(idValue)};
         res.render('index', hbsObject);
 
 
@@ -146,18 +151,21 @@ module.exports = {
         let articleIndex = parseInt(req.params.index);
         //set to zero as a quick error handling in case user types in something unexpected in the url
         let newIndex=0;
+        let idValue;
 
 
         //handling for the first article is the user clicks the right arrow it displays the last article in the array
         if(articleIndex === 0) {
             newIndex = req.session.newsArray.length  -1;
+            idValue = req.session.newsArray[newIndex]._id;
 
         } else {
             newIndex = articleIndex -1
+            idValue = req.session.newsArray[newIndex]._id;
 
         }
         //renders the articles and comments to the page
-        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, body: getComments(req.params.id)};
+        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, body: getComments(idValue)};
         res.render('index', hbsObject);
 
 

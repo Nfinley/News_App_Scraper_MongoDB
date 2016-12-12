@@ -4,17 +4,16 @@
 
 // Require mongoose
 const mongoose = require("mongoose"),
+
 // Create a schema class
     Schema = mongoose.Schema;
 
 // Create the Note schema
 const NoteSchema = new Schema({
     // Just a string
-    comments: [{
-        // title: {type: String, required: "Please title your comment"},
-    // Just a string
-        body: {type: String, required: "Please write your comment"}
-    }]
+    body: {
+       type: String, required: "Please write your comment"
+    }
 });
 
 // Remember, Mongoose will automatically save the ObjectIds of the notes

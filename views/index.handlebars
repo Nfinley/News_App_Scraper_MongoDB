@@ -22,10 +22,11 @@
         </div>
         <!--Added comments to the page-->
         <div class="panel-footer postedComments" id = "commentBox">Comments:
+        {{#each note}}
+            {{body}}
+        {{/each}}
 
         </div>
-
-
 
 
     </div>

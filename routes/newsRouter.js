@@ -23,11 +23,12 @@ router.get('/next/:index/:id', newsController.nextArticle);
 router.get('/previous/:index/:id', newsController.previousArticle);
 
 
-//TODO fix this route
+
 //create post to create a new note or update existing note
 router.put('/update/:id', newsController.updateNote);
 
-//TODO Add a route that will delete the comments
+//route that will delete the note
+router.delete('/delete/:id', newsController.deleteNote);
 
 //create get route to pull articles by Object ID with the notes (add News.find() + .populate("note") in controller )
 // router.get('/:id', newsController.populateNote);

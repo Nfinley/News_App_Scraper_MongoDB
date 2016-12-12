@@ -12,6 +12,7 @@ const News = require('../models/News'),
 function getComments(id){
 
     News.findOne({"_id": id})
+
     // then populate all of the notes associated with it
         .populate("note")
         // now, execute our query
@@ -23,7 +24,9 @@ function getComments(id){
             // Otherwise, send the doc to the browser as a json object
             else {
                 // res.json(doc);
-                return doc;
+                console.log("In the comments function: " , doc);
+                //doc.note.body returns just the comment
+                return doc.note.body;
             }
         });
     // return [id];
@@ -64,7 +67,7 @@ module.exports = {
                     }
                     // Or log the doc
                     else {
-                        console.log(doc);
+                        // console.log(doc);
                     //    Add a res.redirect to the getNews route
                     }
                 });
@@ -107,9 +110,10 @@ module.exports = {
 
     //put the first article on the page by default
     renderNews: (req, res) => {
-        // (req.params.index);
-        let hbsObject = {news: req.session.newsArray[0], index: 0, comments: getComments(req.session.newsArray[0]._id)};
 
+        // (req.params.index);
+        let hbsObject = {news: req.session.newsArray[0], index: 0, body: getComments(req.session.newsArray[0]._id)};
+        console.log(JSON.stringify(hbsObject));
         res.render('index', hbsObject);
 
     },
@@ -131,7 +135,7 @@ module.exports = {
 
         }
         //renders the articles and comments to the page
-        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, comments: getComments(req.params.id)};
+        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, body: getComments(req.params.id)};
         res.render('index', hbsObject);
 
 
@@ -153,21 +157,23 @@ module.exports = {
 
         }
         //renders the articles and comments to the page
-        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, comments: getComments(req.params.id)};
+        let hbsObject = {news: req.session.newsArray[newIndex], index: newIndex, body: getComments(req.params.id)};
         res.render('index', hbsObject);
 
 
     },
 
-//TODO GET THIS FUNCTION TO WORK. The data is coming in but not saving to the database
-//create function to create new note and update existing note
+
+//function that creates new note and update existing note
     updateNote: (req, res) => {
-        console.log("This is content of data: ", req);
+        console.log("This is content of data: ", req.body, req.params.id);
         // Create a note and pass the req.body to the entry
+
         let newNote = new Note(req.body);
         console.log("HI", newNote);
         // And save the new note the db
         newNote.save(function (error, doc) {
+            console.log("This is the DOCC: " , doc);
             // Log any errors
             if (error) {
                 console.log(error);
@@ -190,6 +196,20 @@ module.exports = {
                     });
             }
         });
+    },
+
+//    TODO create a delete route
+    deleteNote: (req, res) => {
+        News.update({"_id": req.params.id}, {$unset: {note: "$oid"}}, function (error, response) {
+            if (error) {
+                console.log(error);
+            } else {
+                res.send(response);
+                console.log(response);
+            }
+        })
+
+
     }
 
 };

@@ -48,7 +48,7 @@ module.exports = {
                 // Add the text and href of every link, and save them as properties of the result object
                 result.title = $(this).children("a").text();
                 result.link = $(this).children("a").attr("href");
-                result.brief = $(this).parent().attr('class', 'cb-excerpt').text();
+                result.brief = $(this).parent("div").children("div").attr('class', 'cb-excerpt').text();
                 //GET THIS ONE WORKING
                 // result.image = $(this).parent().attr('class', 'cb-mask').children("img").attr("src");
 

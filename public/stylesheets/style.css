@@ -13,6 +13,22 @@
 
 }
 
+.panel-footer.postedComments {
+    text-align: left;
+    font-size: 20px;
+}
+
+.footerHeader {
+    font-size: 16px;
+}
+
+a.btn.btn-sm.btn-primary {
+    margin-top: 20px;
+}
+
+.trashButton {
+    color: white;
+}
 
 * Links */
 a,

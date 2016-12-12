@@ -15,7 +15,7 @@ $(document).on("click", "#sendComment", function() {
         url: "/news/update/" + thisId,
         data: {
             // Value taken from note textarea
-            body: $("#commentBody").val()
+            body: $("#comment").val()
 
         }
 
@@ -23,9 +23,9 @@ $(document).on("click", "#sendComment", function() {
         // Log the response
         console.log("This is the done data: " + data);
         //TODO append a trash can button to the page with an ajax delete reference route
-        $("#commentBox").append('<p>'+data+'</p>');
+        $("#commentBox").append('<p class="footerHeader">'+data+'   '+ '<button type="submit" class="btn btn-danger trashButton" id="trashDelete">X</button> </p>');
         // Empty the notes section
-        $("#commentBody").val("");
+        $("#comment").val("");
     });
 
 

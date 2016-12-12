@@ -9,18 +9,20 @@
             <p><a href="{{news.link}}" class="btn btn-sm btn-primary">Read More</a></p>
 
             <!---->
-            <div class="addComment">
-            <h4>Add Your Comment</h4>
-            <textarea class type="text" placeholder="comment" id="commentBody"></textarea>
-            <input type="hidden" name="" value="true" />
-                <button type="submit" class="btn btn-sm btn-warning" id="sendComment" data-id="{{news._id}}" >Add </button>
+            <div class="form-group row addComment">
+                <label for="comment" class="col-xs-2 col-form-label">Add a comment</label>
+                <div class="col-xs-8">
+                    <input class="form-control" type="text" value="" id="comment">
+                </div>
+                <div class="col-xs-2">
+                    <button type="submit" class="btn btn-sm btn-warning" id="sendComment" data-id="{{news._id}}" >Add </button>
+                </div>
             </div>
+
         </div>
         <!--Added comments to the page-->
         <div class="panel-footer postedComments" id = "commentBox">Comments:
-            <div> <p> {{comments}}
-            </p></div>
-            <button type="submit" class="btn btn-primary" href="/delete/:id"><i class="fa fa-trash"></i></button>
+
         </div>
 
 

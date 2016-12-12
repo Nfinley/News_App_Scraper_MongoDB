@@ -51,7 +51,7 @@ module.exports = {
                 // Add the text and href of every link, and save them as properties of the result object
                 result.title = $(this).children("a").text();
                 result.link = $(this).children("a").attr("href");
-                result.brief = $(this).parent("div").children("div").attr('class', 'cb-excerpt').text();
+                result.brief = $(this).nextAll('.cb-excerpt').text();
                 //GET THIS ONE WORKING
                 // result.image = $(this).parent().attr('class', 'cb-mask').children("img").attr("src");
 
@@ -113,7 +113,7 @@ module.exports = {
 
         // (req.params.index);
         let hbsObject = {news: req.session.newsArray[0], index: 0, body: getComments(req.session.newsArray[0]._id)};
-        console.log(JSON.stringify(hbsObject));
+        console.log("This is the initial load: " + JSON.stringify(hbsObject));
         res.render('index', hbsObject);
 
     },

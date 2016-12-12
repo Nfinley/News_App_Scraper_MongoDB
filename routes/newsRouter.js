@@ -9,7 +9,7 @@ const express = require('express'),
 router.get('/', newsController.scrapeNews);
 
 
-//create get route to GET THE ARTICLES
+//create get route to GET THE ARTICLES from the data
 router.get('/getNews', newsController.getNews);
 
 //create get route to GET THE ARTICLES
@@ -23,7 +23,7 @@ router.get('/next/:index/:id', newsController.nextArticle);
 router.get('/previous/:index/:id', newsController.previousArticle);
 
 
-
+//TODO fix this route
 //create post to create a new note or update existing note
 router.put('/update/:id', newsController.updateNote);
 

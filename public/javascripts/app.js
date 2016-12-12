@@ -3,11 +3,12 @@
 
 'use strict';
 
-//TODO this function is not working. The id and the comment is getting passed in but the post is not working
+//TODO this function is not working. The id and the comment are getting passed in but the post is not working
 // Handles the click of the add comment button and will
 $(document).on("click", "#sendComment", function() {
     // Grab the id associated with the article from the submit button
     let thisId = $(this).attr("data-id");
+    // console.log(thisId + " " + $("#commentBody").val());
 
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({

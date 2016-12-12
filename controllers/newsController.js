@@ -64,6 +64,7 @@ module.exports = {
                     // Or log the doc
                     else {
                         console.log(doc);
+                    //    Add a res.redirect to the getNews route
                     }
                 });
 

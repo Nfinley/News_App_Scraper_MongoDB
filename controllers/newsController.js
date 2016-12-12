@@ -2,7 +2,8 @@
 
 const News = require('../models/News'),
     cheerio = require("cheerio"),
-    request = require("request");
+    request = require("request"),
+    Note = require("../models/Note.js");
 
 
 
@@ -69,7 +70,7 @@ module.exports = {
                 });
 
             });
-            res.send("Scrape Complete");
+            res.redirect('/news/getNews');
         });
     },
 
@@ -96,12 +97,10 @@ module.exports = {
 
                     //saves the content as a session variable and as an array
                     req.session.newsArray = doc;
-                    // let hbsObject = {news: req.session.newsArray, index: 0};
-                    // console.log("This is the session array: ", req.session.newsArray)
-                    // res.render('index', hbsObject);
 
                     //need to send a response
-                    res.json(req.session.newsArray);
+                    // res.json(req.session.newsArray);
+                    res.redirect('/news/renderNews')
                 }
             });
     },
@@ -160,12 +159,13 @@ module.exports = {
 
     },
 
-
+//TODO GET THIS FUNCTION TO WORK. The data is coming in but not saving to the database
 //create function to create new note and update existing note
     updateNote: (req, res) => {
+        console.log("This is content of data: ", req);
         // Create a note and pass the req.body to the entry
         let newNote = new Note(req.body);
-        console.log("HI");
+        console.log("HI", newNote);
         // And save the new note the db
         newNote.save(function (error, doc) {
             // Log any errors
@@ -175,7 +175,7 @@ module.exports = {
             // If no errors
             else {
                 // Use the article id to find and update the attached note if any
-                Article.findOneAndUpdate({"_id": req.params.id}, {"note": doc._id})
+                News.findOneAndUpdate({"_id": req.params.id}, {"note": doc._id})
                 // Execute the above query
                     .exec(function (err, doc) {
                         // Log any errors
@@ -184,8 +184,8 @@ module.exports = {
                         }
                         else {
                             // Or send the document to the browser
-                            res.send(doc);
-                        //    add a redirect to display the comment on the current article
+                            res.send(req.body.body);
+
                         }
                     });
             }

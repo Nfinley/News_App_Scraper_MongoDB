@@ -3,7 +3,6 @@
 
 'use strict';
 
-//TODO this function is not working. The id and the comment are getting passed in but the post is not working
 // Handles the click of the add comment button and will
 $(document).on("click", "#sendComment", function() {
     // Grab the id associated with the article from the submit button
@@ -23,6 +22,8 @@ $(document).on("click", "#sendComment", function() {
     }).done(function(data) {
         // Log the response
         console.log("This is the done data: " + data);
+        //TODO append a trash can button to the page with an ajax delete reference route
+        $("#commentBox").append('<p>'+data+'</p>');
         // Empty the notes section
         $("#commentBody").val("");
     });

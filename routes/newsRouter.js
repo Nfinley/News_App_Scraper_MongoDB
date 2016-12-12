@@ -9,10 +9,10 @@ const express = require('express'),
 router.get('/', newsController.scrapeNews);
 
 
-//create get route to GET THE ARTICLES from the data
+//get route to GET THE ARTICLES from the data base and store them in  a session variable
 router.get('/getNews', newsController.getNews);
 
-//create get route to GET THE ARTICLES
+// get route to render the page based on the session variable data
 router.get('/renderNews', newsController.renderNews);
 
 
@@ -26,6 +26,8 @@ router.get('/previous/:index/:id', newsController.previousArticle);
 //TODO fix this route
 //create post to create a new note or update existing note
 router.put('/update/:id', newsController.updateNote);
+
+//TODO Add a route that will delete the comments
 
 //create get route to pull articles by Object ID with the notes (add News.find() + .populate("note") in controller )
 // router.get('/:id', newsController.populateNote);
